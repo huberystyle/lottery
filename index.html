@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>lottery</title>
+<style>
+*{ margin:0; padding:0;}
+ul{ list-style:none;}
+.clearfix {zoom:1;}
+.clearfix:after {content:'';display:block;clear:both;height:0;}
+.t{ padding-bottom:12px;}
+.st{ padding:6px 0 4px;}
+.c{ margin:0 0 30px 0;}
+pre{ padding:12px 8px; margin-bottom:30px; background-color:#EEECCC;}
+body{font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+
+.prize{ width:410px; padding:0 0 20px;}
+.prize li{ float:left; width:60px; height:40px; line-height:40px; border:1px solid #000; text-align:center; margin:10px; padding:0;}
+.prize li.on{ margin:0; padding:10px; border-color:#696; background-color:#696; color:#FFF; box-shadow: 10px 10px 5px #CCC;}
+.switch-wrap{width:410px; text-align:center;}
+
+</style>
+<script src="jquery.js"></script>
+<script>
+
+var lottery = {
+	_get:function(){
+		this.prize = $(".prize");
+		this.switchButton = $(".switch");
+	},
+	_bind:function(){
+		var _t = this,_s = true,i = 0;
+		this.switchButton.on("click",function(){
+			if(_s){
+				_s = false;
+				_t.switchButton.text("停止");
+				_t.prize.children().removeClass("on");
+				t = setInterval(function(){
+					if(i >= _t.prize.children().length) i = 0;
+					_t.prize.children().eq(i-1).removeClass("on");
+					_t.prize.children().eq(i).addClass("on");
+					i++;
+				},50);
+			}else{
+				_s = true;
+				_t.switchButton.text("开始");
+				clearInterval(t);
+				setTimeout(function(){
+					var txt  = _t.prize.find(".on").text();
+					alert("恭喜你中奖了，奖品为 "+i);
+				},50);
+			}
+		});
+	},
+	init:function(){
+		this._get();
+		this._bind();
+	}
+};
+
+$(function(){
+	lottery.init();
+});
+</script>
+</head>
+
+<body>
+<h4 class="t">抽奖效果</h4>
+<p class="st">演示效果：</p>
+<div class="c">
+<!------------------------------->
+    <div class="wrap">
+        <ul class="prize clearfix">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+            <li>12</li>
+            <li>13</li>
+            <li>14</li>
+            <li>15</li>
+        </ul>
+        <div class="switch-wrap">
+        	<a href="javascript:void(0)" class="switch">开始</a>
+        </div>
+    </div>
+<!------------------------------->
+</div>
+</body>
+</html>
